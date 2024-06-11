@@ -1993,7 +1993,6 @@
         "material_skin_fragment_flag": 0,
         "material_skin_fragment_law": 0,
         "material_skin_fragment_shop": 0,
-        "material_soul_fragment": 4508,
         "material_tape_alien": 1,
         "material_tape_aurora": 1,
         "material_tape_aurora_wrong_version": 1,
@@ -2065,7 +2064,9 @@
         "material_soul_fragment",
         "material_ticket",
         "material_ticket_bossrush",
-        "material_wood"
+        "material_wood",
+        "material_soul_fragment",
+        "material_zongzi_fragment"
     ],
     "token": {
         "factorvoucher": [
