@@ -79,7 +79,7 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
                         if total:
                             percent = downloaded / total
                             done = int(bar_len * percent)
-                            bar = '█' * done + '-' * (bar_len - done)
+                            bar = '#' * done + '-' * (bar_len - done)
                             eta = (total - downloaded) / speed if speed > 0 else 0
                             mins, secs = divmod(int(eta), 60)
                             eta_str = f"{mins:02}:{secs:02}"  # e.g. 01:25
