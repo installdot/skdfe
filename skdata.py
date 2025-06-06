@@ -13,9 +13,6 @@ from typing import List, Tuple, Dict
 
 
 
-
-
-
 BASE_URL = "http://www.chillyroom.com/zh"
 APK_REGEX = re.compile(
     r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
@@ -654,10 +651,10 @@ def write_master_txt(
 
             
             out.write(
-                "██████  ██    ██ ███████ ███████ \n",
-                "██   ██ ██    ██ ██      ██      \n",
-                "██████  ██    ██ █████   █████   \n",
-                "██   ██ ██    ██ ██      ██      \n",
+                "██████  ██    ██ ███████ ███████ \n"
+                "██   ██ ██    ██ ██      ██      \n"
+                "██████  ██    ██ █████   █████   \n"
+                "██   ██ ██    ██ ██      ██      \n"
                 "██████   ██████  ██      ██      \n\n"
             )
             buff_ids = set()
