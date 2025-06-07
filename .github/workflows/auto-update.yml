@@ -75,8 +75,8 @@ jobs:
     - name: Rename outputs
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: |
-        mv I2language_${{ steps.check_version.outputs.new_version }}.csv I2language.csv
-        mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt Allinfo.txt
+        Move-Item I2language_${{ steps.check_version.outputs.new_version }}.csv I2language.csv -Force
+        Move-Item Allinfo_${{ steps.check_version.outputs.new_version }}.txt Allinfo.txt -Force
         
     - name: Update version.json
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
