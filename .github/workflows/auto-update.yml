@@ -31,31 +31,32 @@ jobs:
     - name: Install Python deps
       run: pip install requests
 
-    - id: check_version
+    - name: Check current and latest version
+      id: check_version
       shell: python
       run: |
         import json, requests, re, os
     
-        # Load old version
-        with open('version.json', 'r') as f:
+        with open('version.json', 'r', encoding='utf-8') as f:
             old = json.load(f).get('version', '')
     
-        # Fetch latest version
-        resp = requests.get("http://www.chillyroom.com/zh", timeout=15)
-        m = re.search(
-            r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk",
-            resp.text
+        url = "http://www.chillyroom.com/zh"
+        apk_re = re.compile(
+            r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
         )
+        resp = requests.get(url, timeout=15)
+        m = apk_re.search(resp.text)
         if not m:
-            raise SystemExit("::error::Could not detect latest APK version")
-    
+            raise SystemExit("::error:: Could not detect latest APK version")
         new = m.group(1)
+    
+        print(f"Old version: {old}")
+        print(f"New version: {new}")
         run_update = new != old
     
-        # Write outputs
-        with open(os.environ["GITHUB_OUTPUT"], "a") as out:
-            out.write(f"new_version={new}\n")
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
             out.write(f"old_version={old}\n")
+            out.write(f"new_version={new}\n")
             out.write(f"run_update={'true' if run_update else 'false'}\n")
     - name: Report status
       if: always()
@@ -77,10 +78,13 @@ jobs:
         mv I2language_${{ steps.check_version.outputs.new_version }}.csv  I2language.csv
         mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt     Allinfo.txt
 
-    - name: Write new version.json
+    - name: Update version.json
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
+      shell: python
       run: |
-        echo "{\"version\":\"${{ steps.check_version.outputs.new }}\"}" > version.json
+        import json
+        with open("version.json", "w", encoding="utf-8") as f:
+            json.dump({"version": "${{ steps.check_version.outputs.new_version }}"}, f)
 
     - name: Commit & push updated data
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
