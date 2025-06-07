@@ -1,12 +1,11 @@
 name: Auto-update Soul Knight Data
 
-# 1. Trigger schedule
 on:
   schedule:
-    - cron: '0 3 * * *'     # every day at 03:00 UTC
+    - cron: '0 3 * * *'  # every day at 03:00 UTC
 
 permissions:
-  contents: write          # allow pushes from this workflow
+  contents: write
 
 jobs:
   update-data:
@@ -16,7 +15,7 @@ jobs:
     - name: Check out code
       uses: actions/checkout@v3
       with:
-        persist-credentials: true  # so we can push commits
+        persist-credentials: true
 
     - name: Set up Python 3.10
       uses: actions/setup-python@v5
@@ -31,70 +30,75 @@ jobs:
     - name: Install Python deps
       run: pip install requests
 
-    # 2. Check version.json and upstream version
     - id: check_version
+      shell: bash
       run: |
         python - << 'EOF'
-import json, requests, re, sys
+        import json, requests, re, sys
 
-# load last version
-with open('version.json') as f:
-    old = json.load(f).get('version', '')
+        # load last version
+        with open('version.json') as f:
+            old = json.load(f).get('version', '')
 
-# fetch latest
-BASE_URL = "http://www.chillyroom.com/zh"
-APK_REGEX = re.compile(
-  r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
-)
-resp = requests.get(BASE_URL, timeout=15)
-resp.raise_for_status()
-m = APK_REGEX.search(resp.text)
-if not m:
-    print("::error::Could not detect latest APK version"); sys.exit(1)
-new = m.group(1)
+        # fetch latest
+        BASE_URL = "http://www.chillyroom.com/zh"
+        APK_REGEX = re.compile(
+          r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
+        )
+        resp = requests.get(BASE_URL, timeout=15)
+        resp.raise_for_status()
+        m = APK_REGEX.search(resp.text)
+        if not m:
+            print("::error::Could not detect latest APK version")
+            sys.exit(1)
+        new = m.group(1)
 
-# output for next steps
-print(f"::set-output name=new_version::{new}")
-print(f"::set-output name=old_version::{old}")
-print(f"::set-output name=run_update::{'true' if new!=old else 'false'}")
-EOF
-      shell: bash
+        # emit outputs
+        print(f"old={old}")
+        print(f"new={new}")
+        print(f"run_update={'true' if new != old else 'false'}")
+        EOF
+      # Capture those prints into outputs
+      env:
+        GITHUB_OUTPUT: ${{ github.output }}
+      # Actually set output variables
+      # Note: in newer runners, you should write directly to $GITHUB_OUTPUT, 
+      # but above we captured prints—if you want direct, use:
+      # run: |
+      #   echo "old_version=$old" >> $GITHUB_OUTPUT
+      #   echo "new_version=$new" >> $GITHUB_OUTPUT
+      #   echo "run_update=$( [[ $new != $old ]] && echo true || echo false )" >> $GITHUB_OUTPUT
 
-    # 3. Only continue if version changed
     - name: Report status
-      run: |
-        echo "Old version: ${{ steps.check_version.outputs.old_version }}"
-        echo "New version: ${{ steps.check_version.outputs.new_version }}"
       if: always()
+      run: |
+        echo "Old version: ${{ steps.check_version.outputs.old }}"
+        echo "New version: ${{ steps.check_version.outputs.new }}"
 
     - name: Stop if up to date
-      if: steps.check_version.outputs.run_update == 'false'
+      if: ${{ steps.check_version.outputs.run_update == 'false' }}
       run: echo "No update needed, exiting."
 
-    # 4. Run your pipeline for new version
     - name: Run data export
-      if: steps.check_version.outputs.run_update == 'true'
+      if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: python skdata.py
 
-    # 5. Normalize filenames (remove version part)
     - name: Normalize output filenames
-      if: steps.check_version.outputs.run_update == 'true'
+      if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: |
-        mv I2language_${{ steps.check_version.outputs.new_version }}.csv  I2language.csv
-        mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt     Allinfo.txt
+        mv I2language_${{ steps.check_version.outputs.new }}.csv  I2language.csv
+        mv Allinfo_${{ steps.check_version.outputs.new }}.txt     Allinfo.txt
 
-    # 6. Update version.json
     - name: Write new version.json
-      if: steps.check_version.outputs.run_update == 'true'
+      if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: |
-        echo "{\"version\":\"${{ steps.check_version.outputs.new_version }}\"}" > version.json
+        echo "{\"version\":\"${{ steps.check_version.outputs.new }}\"}" > version.json
 
-    # 7. Commit & push changes
     - name: Commit & push updated data
-      if: steps.check_version.outputs.run_update == 'true'
+      if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: |
         git config user.name  "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add I2language.csv Allinfo.txt version.json
-        git commit -m "Updated to ${{ steps.check_version.outputs.new_version }}" || echo "Nothing to commit"
+        git commit -m "Updated to ${{ steps.check_version.outputs.new }}" || echo "Nothing to commit"
         git push
