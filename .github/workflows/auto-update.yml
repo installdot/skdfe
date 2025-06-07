@@ -64,7 +64,7 @@ jobs:
         echo "Old version: ${{ steps.check_version.outputs.old }}"
         echo "New version: ${{ steps.check_version.outputs.new }}"
 
-    - name: Stop if up to date
+    - name: Stop if already up to date
       if: ${{ steps.check_version.outputs.run_update == 'false' }}
       run: echo "No update needed, exiting."
 
@@ -72,12 +72,12 @@ jobs:
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: python skdata.py
 
-    - name: Normalize output filenames
+    - name: Rename outputs
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: |
-        mv I2language_${{ steps.check_version.outputs.new_version }}.csv  I2language.csv
-        mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt     Allinfo.txt
-
+        mv I2language_${{ steps.check_version.outputs.new_version }}.csv I2language.csv
+        mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt Allinfo.txt
+        
     - name: Update version.json
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
       shell: python
