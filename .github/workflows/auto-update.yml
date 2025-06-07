@@ -34,7 +34,7 @@ jobs:
     - id: check_version
       shell: python
       run: |
-        import json, requests, re
+        import json, requests, re, os
     
         # Load old version
         with open('version.json', 'r') as f:
