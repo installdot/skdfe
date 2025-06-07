@@ -1,0 +1,100 @@
+name: Auto-update Soul Knight Data
+
+# 1. Trigger schedule
+on:
+  schedule:
+    - cron: '0 3 * * *'     # every day at 03:00 UTC
+
+permissions:
+  contents: write          # allow pushes from this workflow
+
+jobs:
+  update-data:
+    runs-on: windows-latest
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+      with:
+        persist-credentials: true  # so we can push commits
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Set up .NET 6 Runtime
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Install Python deps
+      run: pip install requests
+
+    # 2. Check version.json and upstream version
+    - id: check_version
+      run: |
+        python - << 'EOF'
+import json, requests, re, sys
+
+# load last version
+with open('version.json') as f:
+    old = json.load(f).get('version', '')
+
+# fetch latest
+BASE_URL = "http://www.chillyroom.com/zh"
+APK_REGEX = re.compile(
+  r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
+)
+resp = requests.get(BASE_URL, timeout=15)
+resp.raise_for_status()
+m = APK_REGEX.search(resp.text)
+if not m:
+    print("::error::Could not detect latest APK version"); sys.exit(1)
+new = m.group(1)
+
+# output for next steps
+print(f"::set-output name=new_version::{new}")
+print(f"::set-output name=old_version::{old}")
+print(f"::set-output name=run_update::{'true' if new!=old else 'false'}")
+EOF
+      shell: bash
+
+    # 3. Only continue if version changed
+    - name: Report status
+      run: |
+        echo "Old version: ${{ steps.check_version.outputs.old_version }}"
+        echo "New version: ${{ steps.check_version.outputs.new_version }}"
+      if: always()
+
+    - name: Stop if up to date
+      if: steps.check_version.outputs.run_update == 'false'
+      run: echo "No update needed, exiting."
+
+    # 4. Run your pipeline for new version
+    - name: Run data export
+      if: steps.check_version.outputs.run_update == 'true'
+      run: python skdata.py
+
+    # 5. Normalize filenames (remove version part)
+    - name: Normalize output filenames
+      if: steps.check_version.outputs.run_update == 'true'
+      run: |
+        mv I2language_${{ steps.check_version.outputs.new_version }}.csv  I2language.csv
+        mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt     Allinfo.txt
+
+    # 6. Update version.json
+    - name: Write new version.json
+      if: steps.check_version.outputs.run_update == 'true'
+      run: |
+        echo "{\"version\":\"${{ steps.check_version.outputs.new_version }}\"}" > version.json
+
+    # 7. Commit & push changes
+    - name: Commit & push updated data
+      if: steps.check_version.outputs.run_update == 'true'
+      run: |
+        git config user.name  "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add I2language.csv Allinfo.txt version.json
+        git commit -m "Updated to ${{ steps.check_version.outputs.new_version }}" || echo "Nothing to commit"
+        git push
