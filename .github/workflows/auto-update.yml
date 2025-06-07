@@ -32,44 +32,31 @@ jobs:
       run: pip install requests
 
     - id: check_version
-      shell: bash
+      shell: python
       run: |
-        python - << 'EOF'
-        import json, requests, re, sys
-
-        # load last version
-        with open('version.json') as f:
+        import json, requests, re
+    
+        # Load old version
+        with open('version.json', 'r') as f:
             old = json.load(f).get('version', '')
-
-        # fetch latest
-        BASE_URL = "http://www.chillyroom.com/zh"
-        APK_REGEX = re.compile(
-          r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
+    
+        # Fetch latest version
+        resp = requests.get("http://www.chillyroom.com/zh", timeout=15)
+        m = re.search(
+            r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk",
+            resp.text
         )
-        resp = requests.get(BASE_URL, timeout=15)
-        resp.raise_for_status()
-        m = APK_REGEX.search(resp.text)
         if not m:
-            print("::error::Could not detect latest APK version")
-            sys.exit(1)
+            raise SystemExit("::error::Could not detect latest APK version")
+    
         new = m.group(1)
-
-        # emit outputs
-        print(f"old={old}")
-        print(f"new={new}")
-        print(f"run_update={'true' if new != old else 'false'}")
-        EOF
-      # Capture those prints into outputs
-      env:
-        GITHUB_OUTPUT: ${{ github.output }}
-      # Actually set output variables
-      # Note: in newer runners, you should write directly to $GITHUB_OUTPUT, 
-      # but above we captured prints—if you want direct, use:
-      # run: |
-      #   echo "old_version=$old" >> $GITHUB_OUTPUT
-      #   echo "new_version=$new" >> $GITHUB_OUTPUT
-      #   echo "run_update=$( [[ $new != $old ]] && echo true || echo false )" >> $GITHUB_OUTPUT
-
+        run_update = new != old
+    
+        # Write outputs
+        with open(os.environ["GITHUB_OUTPUT"], "a") as out:
+            out.write(f"new_version={new}\n")
+            out.write(f"old_version={old}\n")
+            out.write(f"run_update={'true' if run_update else 'false'}\n")
     - name: Report status
       if: always()
       run: |
@@ -87,8 +74,8 @@ jobs:
     - name: Normalize output filenames
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
       run: |
-        mv I2language_${{ steps.check_version.outputs.new }}.csv  I2language.csv
-        mv Allinfo_${{ steps.check_version.outputs.new }}.txt     Allinfo.txt
+        mv I2language_${{ steps.check_version.outputs.new_version }}.csv  I2language.csv
+        mv Allinfo_${{ steps.check_version.outputs.new_version }}.txt     Allinfo.txt
 
     - name: Write new version.json
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
