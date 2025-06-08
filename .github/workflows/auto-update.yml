@@ -58,11 +58,7 @@ jobs:
             out.write(f"old_version={old}\n")
             out.write(f"new_version={new}\n")
             out.write(f"run_update={'true' if run_update else 'false'}\n")
-    - name: Report status
-      if: always()
-      run: |
-        echo "Old version: ${{ steps.check_version.outputs.old }}"
-        echo "New version: ${{ steps.check_version.outputs.new }}"
+
 
     - name: Stop if already up to date
       if: ${{ steps.check_version.outputs.run_update == 'false' }}
@@ -92,5 +88,5 @@ jobs:
         git config user.name  "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add I2language.csv Allinfo.txt version.json
-        git commit -m "Updated to ${{ steps.check_version.outputs.new }}" || echo "Nothing to commit"
+        git commit -m "Updated to ${{ steps.check_version.outputs.new_version }}" || echo "Nothing to commit"
         git push
