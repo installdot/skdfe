@@ -4,7 +4,7 @@
 ██ ███ ██ ██      ██   ██ ██      ██    ██ ██  ██ ██
  ███ ███  ███████ ██   ██ ██       ██████  ██   ████
 
-ring_0
+ring_0 bruh
     Name      : Ring blue
     Forgeable : True
     Is melee  : False
