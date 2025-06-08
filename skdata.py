@@ -63,40 +63,40 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
     try:
         with requests.get(url, stream=True, timeout=30) as resp:
             resp.raise_for_status()
-            total = int(resp.headers.get("content-length", 0))
-            downloaded = 0
-            bar_len = 50  
-            start_time = time.time()
+            # total = int(resp.headers.get("content-length", 0))
+            # downloaded = 0
+            # bar_len = 50  
+            # start_time = time.time()
 
             with open(dest, "wb") as f:
                 for chunk in resp.iter_content(chunk_size=chunk_size):
                     if chunk:
                         f.write(chunk)
-                        downloaded += len(chunk)
-                        elapsed = time.time() - start_time
-                        speed = downloaded / elapsed if elapsed > 0 else 0  
+                        # downloaded += len(chunk)
+                        # elapsed = time.time() - start_time
+                        # speed = downloaded / elapsed if elapsed > 0 else 0  
 
-                        if total:
-                            percent = downloaded / total
-                            done = int(bar_len * percent)
-                            bar = '█' * done + '-' * (bar_len - done)
-                            eta = (total - downloaded) / speed if speed > 0 else 0
-                            mins, secs = divmod(int(eta), 60)
-                            eta_str = f"{mins:02}:{secs:02}"  # e.g. 01:25
+                        # if total:
+                        #     percent = downloaded / total
+                        #     done = int(bar_len * percent)
+                        #     bar = '█' * done + '-' * (bar_len - done)
+                        #     eta = (total - downloaded) / speed if speed > 0 else 0
+                        #     mins, secs = divmod(int(eta), 60)
+                        #     eta_str = f"{mins:02}:{secs:02}"  # e.g. 01:25
 
-                            sys.stdout.write(
-                                f"\r[{bar}] {percent*100:5.1f}% "
-                                f"{downloaded/1024/1024:6.2f} MB/{total/1024/1024:6.2f} MB "
-                                f"{speed/1024/1024:5.2f} MB/s "
-                                f"ETA: {eta_str}"
-                            )
-                        else:
-                            sys.stdout.write(
-                                f"\rDownloaded {downloaded/1024/1024:6.2f} MB "
-                                f"at {speed/1024/1024:5.2f} MB/s"
-                            )
+                        #     sys.stdout.write(
+                        #         f"\r[{bar}] {percent*100:5.1f}% "
+                        #         f"{downloaded/1024/1024:6.2f} MB/{total/1024/1024:6.2f} MB "
+                        #         f"{speed/1024/1024:5.2f} MB/s "
+                        #         f"ETA: {eta_str}"
+                        #     )
+                        # else:
+                        #     sys.stdout.write(
+                        #         f"\rDownloaded {downloaded/1024/1024:6.2f} MB "
+                        #         f"at {speed/1024/1024:5.2f} MB/s"
+                        #     )
 
-                        sys.stdout.flush()
+                        # sys.stdout.flush()
         print("\nDownload complete.")
     except Exception as e:
         raise RuntimeError(f"Failed to download {url}: {e}") from e
