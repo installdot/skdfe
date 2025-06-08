@@ -40,3 +40,4 @@ jobs:
           path: |
             *.csv
             *.txt
+            *.json
