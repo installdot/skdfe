@@ -73,7 +73,7 @@ jobs:
       run: |
         Move-Item I2language_${{ steps.check_version.outputs.new_version }}.csv I2language.csv -Force
         Move-Item Allinfo_${{ steps.check_version.outputs.new_version }}.txt Allinfo.txt -Force
-        Move-Item weapon_${{ steps.check_version.outputs.new_version }}.json Allinfo.json -Force
+        Move-Item weapons_${{ steps.check_version.outputs.new_version }}.json Allinfo.json -Force
         
     - name: Update version.json
       if: ${{ steps.check_version.outputs.run_update == 'true' }}
