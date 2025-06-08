@@ -13,6 +13,9 @@ from typing import List, Tuple, Dict
 
 
 
+
+
+
 BASE_URL = "http://www.chillyroom.com/zh"
 APK_REGEX = re.compile(
     r"https://apk\.chillyroom\.com/apks/[\w\d.\-]+/SoulKnight-release-chillyroom-([\w\d.\-]+)\.apk"
@@ -60,40 +63,40 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
     try:
         with requests.get(url, stream=True, timeout=30) as resp:
             resp.raise_for_status()
-            # total = int(resp.headers.get("content-length", 0))
-            # downloaded = 0
-            # bar_len = 50  
+            total = int(resp.headers.get("content-length", 0))
+            downloaded = 0
+            bar_len = 50  
             start_time = time.time()
 
             with open(dest, "wb") as f:
                 for chunk in resp.iter_content(chunk_size=chunk_size):
                     if chunk:
                         f.write(chunk)
-                        # downloaded += len(chunk)
-                        # elapsed = time.time() - start_time
-                        # speed = downloaded / elapsed if elapsed > 0 else 0  
+                        downloaded += len(chunk)
+                        elapsed = time.time() - start_time
+                        speed = downloaded / elapsed if elapsed > 0 else 0  
 
-                        # if total:
-                        #     percent = downloaded / total
-                        #     done = int(bar_len * percent)
-                        #     bar = '#' * done + '-' * (bar_len - done)
-                        #     eta = (total - downloaded) / speed if speed > 0 else 0
-                        #     mins, secs = divmod(int(eta), 60)
-                        #     eta_str = f"{mins:02}:{secs:02}"  # e.g. 01:25
+                        if total:
+                            percent = downloaded / total
+                            done = int(bar_len * percent)
+                            bar = '█' * done + '-' * (bar_len - done)
+                            eta = (total - downloaded) / speed if speed > 0 else 0
+                            mins, secs = divmod(int(eta), 60)
+                            eta_str = f"{mins:02}:{secs:02}"  # e.g. 01:25
 
-                        #     sys.stdout.write(
-                        #         f"\r[{bar}] {percent*100:5.1f}% "
-                        #         f"{downloaded/1024/1024:6.2f} MB/{total/1024/1024:6.2f} MB "
-                        #         f"{speed/1024/1024:5.2f} MB/s "
-                        #         f"ETA: {eta_str}"
-                        #     )
-                        # else:
-                        #     sys.stdout.write(
-                        #         f"\rDownloaded {downloaded/1024/1024:6.2f} MB "
-                        #         f"at {speed/1024/1024:5.2f} MB/s"
-                        #     )
+                            sys.stdout.write(
+                                f"\r[{bar}] {percent*100:5.1f}% "
+                                f"{downloaded/1024/1024:6.2f} MB/{total/1024/1024:6.2f} MB "
+                                f"{speed/1024/1024:5.2f} MB/s "
+                                f"ETA: {eta_str}"
+                            )
+                        else:
+                            sys.stdout.write(
+                                f"\rDownloaded {downloaded/1024/1024:6.2f} MB "
+                                f"at {speed/1024/1024:5.2f} MB/s"
+                            )
 
-                        # sys.stdout.flush()
+                        sys.stdout.flush()
         print("\nDownload complete.")
     except Exception as e:
         raise RuntimeError(f"Failed to download {url}: {e}") from e
@@ -720,8 +723,48 @@ def write_master_txt(
 
     return txt_path
 
+def export_filtered_weapons_from_info(
+    weapon_info_path: Path,
+    weapons_map: Dict[str, str],
+    output_path: Path,
+) -> None:
+    """
+    Export only the weapons listed in WeaponInfo.txt, filtered by exclusion patterns,
+    and write them as {weapon_id: english_name} JSON.
+    """
+    # Read WeaponInfo JSON
+    try:
+        with open(weapon_info_path, "r", encoding="utf-8") as f:
+            info_data = json.load(f)
+    except Exception as e:
+        raise RuntimeError(f"Failed reading WeaponInfo.txt: {e}") from e
 
+    # Get weapon IDs from WeaponInfo
+    weapon_list = info_data.get("weapons", [])
+    ids_from_info = {w.get("name", "") for w in weapon_list if "name" in w}
 
+    # Define exclusion patterns
+    exclude_patterns = [
+        re.compile(r"^weapon_000.*xx\d*$"),
+        re.compile(r"^weapon_init.*xx\d*$"),
+        re.compile(r"^transform_weapon_.*"),
+    ]
+
+    # Filter based on both inclusion and exclusion
+    filtered = {}
+    for wid in ids_from_info:
+        if any(p.match(wid) for p in exclude_patterns):
+            continue
+        english_name = weapons_map.get(wid)
+        if english_name:
+            filtered[wid] = english_name
+
+    # Write to JSON
+    try:
+        with open(output_path, "w", encoding="utf-8") as f:
+            json.dump(filtered, f, ensure_ascii=False, indent=2)
+    except Exception as e:
+        raise RuntimeError(f"Failed writing filtered weapons JSON: {e}") from e
 
 
 
@@ -797,7 +840,16 @@ def main():
         logging.error(f"Failed baking all info file: {e}")
         sys.exit(1)
 
-    
+    filtered_json_path = SCRIPT_DIR / f"filtered_weapons_{version}.json"
+    try:
+        export_filtered_weapons_from_info(
+            weapon_info_path=weapon_json_file,
+            weapons_map=lang_maps["weapons"],
+            output_path=filtered_json_path,
+        )
+        logging.info(f"Filtered weapon JSON written: {filtered_json_path}")
+    except Exception as e:
+        logging.error(f"Failed exporting filtered weapons JSON: {e}")
     try:
         if DATA_DIR.exists():
             shutil.rmtree(DATA_DIR)
