@@ -840,7 +840,7 @@ def main():
         logging.error(f"Failed baking all info file: {e}")
         sys.exit(1)
 
-    filtered_json_path = SCRIPT_DIR / f"filtered_weapons_{version}.json"
+    filtered_json_path = SCRIPT_DIR / f"weapons_{version}.json"
     try:
         export_filtered_weapons_from_info(
             weapon_info_path=weapon_json_file,
