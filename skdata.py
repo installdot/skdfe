@@ -9,11 +9,8 @@ import zipfile
 import requests
 import subprocess
 from pathlib import Path
+from collections import defaultdict
 from typing import List, Tuple, Dict
-
-
-
-
 
 
 BASE_URL = "http://www.chillyroom.com/zh"
@@ -27,13 +24,22 @@ ASSET_STUDIO_CLI_URL = (
 )
 
 LANGUAGES = [
-    "English", "Chinese (Traditional)", "Chinese (Simplified)", "Japanese", "Korean",
-    "Spanish", "German", "Portuguese", "French", "Russian", "Polish", "Persian",
-    "Arabic", "Thai", "Vietnamese",
+    "English",
+    "Chinese (Traditional)",
+    "Chinese (Simplified)",
+    "Japanese",
+    "Korean",
+    "Spanish",
+    "German",
+    "Portuguese",
+    "French",
+    "Russian",
+    "Polish",
+    "Persian",
+    "Arabic",
+    "Thai",
+    "Vietnamese",
 ]
-
-
-
 
 
 logging.basicConfig(
@@ -49,10 +55,6 @@ ASSET_STUDIO_ZIP = DATA_DIR / "AssetStudio.zip"
 ASSET_STUDIO_DIR = DATA_DIR / "AssetStudio"
 
 
-
-
-
-
 def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
     """
     Download `url` to `dest` with a custom progress bar, download speed, and ETA.
@@ -65,7 +67,7 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
             resp.raise_for_status()
             # total = int(resp.headers.get("content-length", 0))
             # downloaded = 0
-            # bar_len = 50  
+            # bar_len = 50
             # start_time = time.time()
 
             with open(dest, "wb") as f:
@@ -74,7 +76,7 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
                         f.write(chunk)
                         # downloaded += len(chunk)
                         # elapsed = time.time() - start_time
-                        # speed = downloaded / elapsed if elapsed > 0 else 0  
+                        # speed = downloaded / elapsed if elapsed > 0 else 0
 
                         # if total:
                         #     percent = downloaded / total
@@ -100,6 +102,7 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
         print("\nDownload complete.")
     except Exception as e:
         raise RuntimeError(f"Failed to download {url}: {e}") from e
+
 
 def extract_zip(zip_path: Path, target_dir: Path) -> None:
     """
@@ -140,15 +143,21 @@ def run_asset_studio_cli(
     if not executable.exists():
         executable = asset_studio_dir / "AssetStudioModCLI"
         if not executable.exists():
-            raise FileNotFoundError(f"AssetStudioModCLI not found in {asset_studio_dir}")
+            raise FileNotFoundError(
+                f"AssetStudioModCLI not found in {asset_studio_dir}"
+            )
 
     cmd = [
         str(executable),
         str(unity_data_path),
-        "-t", asset_type,
-        "-m", mode,
-        "-o", str(output_dir),
-        "--filter-by-name", filter_name,
+        "-t",
+        asset_type,
+        "-m",
+        mode,
+        "-o",
+        str(output_dir),
+        "--filter-by-name",
+        filter_name,
     ]
     if assembly_folder:
         if not assembly_folder.exists() or not assembly_folder.is_dir():
@@ -159,7 +168,9 @@ def run_asset_studio_cli(
     try:
         subprocess.run(cmd, check=True, cwd=asset_studio_dir)
     except subprocess.CalledProcessError as e:
-        raise RuntimeError(f"AssetStudioModCLI failed (exit code {e.returncode})") from e
+        raise RuntimeError(
+            f"AssetStudioModCLI failed (exit code {e.returncode})"
+        ) from e
     logging.info(f"AssetStudio CLI finished extracting {asset_type}.")
 
 
@@ -184,12 +195,12 @@ def parse_i2_asset_file(
 
     data = file_path.read_bytes()
     records: List[Tuple[str, List[str]]] = []
-    pos = 60  
+    pos = 60
 
     while pos < len(data):
-        
+
         if pos % 4:
-            pos += (4 - (pos % 4))
+            pos += 4 - (pos % 4)
         if pos + 4 > len(data):
             break
 
@@ -197,8 +208,10 @@ def parse_i2_asset_file(
         pos += 4
 
         if key_len == 0:
-            
-            while pos < len(data) and int.from_bytes(data[pos : pos + 4], "little") == 0:
+
+            while (
+                pos < len(data) and int.from_bytes(data[pos : pos + 4], "little") == 0
+            ):
                 pos += 4
             if pos >= len(data) - 4:
                 break
@@ -207,7 +220,6 @@ def parse_i2_asset_file(
             if key_len == 0:
                 break
 
-        
         key_bytes = data[pos : pos + key_len]
         try:
             key = key_bytes.decode("utf-8", errors="ignore").strip()
@@ -215,11 +227,9 @@ def parse_i2_asset_file(
             key = key_bytes.decode("latin-1", errors="ignore").strip()
         pos += key_len
 
-        
         if pos % 4:
-            pos += (4 - (pos % 4))
+            pos += 4 - (pos % 4)
 
-        
         if pos + 4 > len(data):
             break
         start_count = int.from_bytes(data[pos : pos + 4], "little")
@@ -252,23 +262,16 @@ def parse_i2_asset_file(
             pos += field_len
 
             if pos % 4:
-                pos += (4 - (pos % 4))
+                pos += 4 - (pos % 4)
 
-        
         if pos + 4 <= len(data):
             pos += 4
 
-        
         if not filter_patterns or not any(p.match(key) for p in filter_patterns):
             records.append((key, fields))
 
-    
     records.sort(key=lambda r: r[0])
     return records, LANGUAGES
-
-
-
-
 
 
 def get_latest_apk_info() -> Tuple[str, str]:
@@ -292,17 +295,13 @@ def get_latest_apk_info() -> Tuple[str, str]:
     return version, link
 
 
-
-
-
-
 def ensure_apk_extracted(version: str, link: str) -> Path:
     """
     Download the APK if needed, then extract it into data/sk.
     Returns the path to the extracted folder (sk_extracted_path).
     """
     versioned_apk_file = DATA_DIR / f"sk-{version}.apk"
-    sk_extracted_path = DATA_DIR / f"sk-{version}"  
+    sk_extracted_path = DATA_DIR / f"sk-{version}"
 
     if not versioned_apk_file.exists():
         download_file(link, versioned_apk_file)
@@ -325,10 +324,6 @@ def ensure_apk_extracted(version: str, link: str) -> Path:
     return sk_extracted_path
 
 
-
-
-
-
 def ensure_asset_studio() -> Path:
     """
     Download AssetStudio CLI ZIP if needed, extract it under DATA_DIR/AssetStudio.
@@ -347,10 +342,6 @@ def ensure_asset_studio() -> Path:
     return ASSET_STUDIO_DIR
 
 
-
-
-
-
 def run_asset_extractions(sk_extracted_path: Path) -> None:
     """
     1) Extract I2Languages .dat (monobehaviour/raw)
@@ -365,13 +356,13 @@ def run_asset_extractions(sk_extracted_path: Path) -> None:
     if not managed_folder.exists() or not managed_folder.is_dir():
         raise FileNotFoundError(f"Managed folder missing: {managed_folder}")
 
-    
     try:
         EXPORT_DIR.mkdir(parents=True, exist_ok=True)
     except Exception as e:
-        raise RuntimeError(f"Could not create export directory {EXPORT_DIR}: {e}") from e
+        raise RuntimeError(
+            f"Could not create export directory {EXPORT_DIR}: {e}"
+        ) from e
 
-    
     run_asset_studio_cli(
         ASSET_STUDIO_DIR,
         unity_data_path=unity_data,
@@ -382,7 +373,6 @@ def run_asset_extractions(sk_extracted_path: Path) -> None:
         assembly_folder=managed_folder,
     )
 
-    
     removed_any = False
     for dat_file in EXPORT_DIR.rglob("I2Languages*.dat"):
         try:
@@ -402,7 +392,6 @@ def run_asset_extractions(sk_extracted_path: Path) -> None:
     if not removed_any:
         logging.info("No SMALL I2Languages*.dat files were found to remove.")
 
-    
     run_asset_studio_cli(
         ASSET_STUDIO_DIR,
         unity_data_path=unity_data,
@@ -411,10 +400,6 @@ def run_asset_extractions(sk_extracted_path: Path) -> None:
         mode="export",
         filter_name="WeaponInfo",
     )
-
-
-
-
 
 
 def find_valid_i2_dat() -> Path:
@@ -430,11 +415,9 @@ def find_valid_i2_dat() -> Path:
         if size >= 2_000_000:
             logging.info(f"Found valid I2 dat: {dat_file.name} ({size} bytes)")
             return dat_file
-    raise FileNotFoundError("No valid (≥2 MB) I2Languages .dat file found under export/.")
-
-
-
-
+    raise FileNotFoundError(
+        "No valid (≥2 MB) I2Languages .dat file found under export/."
+    )
 
 
 def write_i2_csv(version: str, records: List[Tuple[str, List[str]]]) -> Path:
@@ -453,10 +436,6 @@ def write_i2_csv(version: str, records: List[Tuple[str, List[str]]]) -> Path:
     except Exception as e:
         raise RuntimeError(f"Failed writing CSV {csv_path}: {e}") from e
     return csv_path
-
-
-
-
 
 
 def load_language_map(csv_path: Path) -> Dict[str, str]:
@@ -499,12 +478,12 @@ def load_language_map(csv_path: Path) -> Dict[str, str]:
 
     return resolved_map
 
+
 def build_dictionaries(csv_path: Path) -> Dict[str, Dict]:
     """
     Read resolved language map and build all lookup dictionaries.
     """
     lang_map = load_language_map(csv_path)
-
     weapons_map = {}
     buff_names = {}
     buff_infos = {}
@@ -543,7 +522,11 @@ def build_dictionaries(csv_path: Path) -> Dict[str, Dict]:
         elif rid.startswith("plant_") and "/" not in rid:
             plant_ids[rid] = eng
 
-        elif rid.startswith("Pet_name_") and not rid.endswith("_des") and not rid.endswith("_lock"):
+        elif (
+            rid.startswith("Pet_name_")
+            and not rid.endswith("_des")
+            and not rid.endswith("_lock")
+        ):
             pets[rid] = eng
 
         else:
@@ -580,7 +563,6 @@ def write_master_txt(
     if not weapon_json_path.exists():
         raise FileNotFoundError(f"WeaponInfo JSON not found: {weapon_json_path}")
 
-    
     try:
         with open(weapon_json_path, "r", encoding="utf-8") as f:
             data = json.load(f)
@@ -591,7 +573,7 @@ def write_master_txt(
 
     weapons = data.get("weapons", [])
     weapons_sorted = sorted(weapons, key=lambda w: w.get("name", ""))
-    
+
     weapons_map = lang_maps["weapons"]
     buff_names = lang_maps["buff_names"]
     buff_infos = lang_maps["buff_infos"]
@@ -602,10 +584,10 @@ def write_master_txt(
     plants = lang_maps["plants"]
     pets = lang_maps["pets"]
     characters = lang_maps["characters"]
-
+    max_skin_ids = {}
     try:
         with open(txt_path, "w", encoding="utf-8") as out:
-            
+
             out.write(
                 "██     ██ ███████  █████  ██████   ██████  ███    ██\n"
                 "██     ██ ██      ██   ██ ██   ██ ██    ██ ████   ██\n"
@@ -623,7 +605,6 @@ def write_master_txt(
                 out.write(f"    Rarity    : {w.get('level', '')}\n")
                 out.write(f"    Type      : {w.get('type', '')}\n\n")
 
-            
             out.write(
                 " ██████ ██   ██  █████  ██████   █████   ██████ ████████ ███████ ██████\n"
                 "██      ██   ██ ██   ██ ██   ██ ██   ██ ██         ██    ██      ██   ██\n"
@@ -635,12 +616,13 @@ def write_master_txt(
                 skins = characters[char_index]
                 default_name = skins.get("0", "[Unknown]")
                 out.write(f"c{char_index} = {default_name}\n")
+                max_skin_id = max(int(sid) for sid in skins.keys())
+                max_skin_ids[f"c{char_index}"] = max_skin_id
                 for skin_index in sorted(skins.keys(), key=lambda x: int(x)):
                     skin_name = skins[skin_index]
                     out.write(f"    c{char_index}_skin{skin_index} = {skin_name}\n")
                 out.write("\n")
 
-            
             out.write(
                 "██████  ███████ ████████\n"
                 "██   ██ ██         ██   \n"
@@ -652,7 +634,6 @@ def write_master_txt(
                 out.write(f"{pet_id.removeprefix('Pet_name_')}\n")
                 out.write(f"    Display name : {pet_name}\n\n")
 
-            
             out.write(
                 "██████  ██    ██ ███████ ███████ \n"
                 "██   ██ ██    ██ ██      ██      \n"
@@ -672,7 +653,6 @@ def write_master_txt(
                 out.write(f"    Name        : {bname}\n")
                 out.write(f"    Description : {binfo}\n\n")
 
-            
             out.write(
                 " ██████ ██   ██  █████  ██       █████  ███    ██  ██████  ███████ \n"
                 "██      ██   ██ ██   ██ ██      ██   ██ ████   ██ ██       ██      \n"
@@ -685,7 +665,9 @@ def write_master_txt(
             challenge_ids.update(challenge_titles.keys())
             challenge_ids.update(challenge_descs.keys())
 
-            for cid in sorted(challenge_ids, key=lambda x: int(x) if x.isdigit() else x):
+            for cid in sorted(
+                challenge_ids, key=lambda x: int(x) if x.isdigit() else x
+            ):
                 name = challenge_names.get(cid, "[Name Not Found]")
                 title = challenge_titles.get(cid, "[Title Not Found]")
                 desc = challenge_descs.get(cid, "[Description Not Found]")
@@ -694,7 +676,6 @@ def write_master_txt(
                 out.write(f"    Title       : {title}\n")
                 out.write(f"    Description : {desc}\n\n")
 
-            
             out.write(
                 "███    ███  █████  ████████ ███████ ██████  ██  █████  ██      \n"
                 "████  ████ ██   ██    ██    ██      ██   ██ ██ ██   ██ ██      \n"
@@ -706,7 +687,6 @@ def write_master_txt(
                 out.write(f"{mid}\n")
                 out.write(f"    Display name : {mname}\n\n")
 
-            
             out.write(
                 "██████  ██       █████  ███    ██ ████████ \n"
                 "██   ██ ██      ██   ██ ████   ██    ██    \n"
@@ -717,11 +697,15 @@ def write_master_txt(
             for pid, pname in sorted(plants.items(), key=lambda kv: kv[0]):
                 out.write(f"{pid}\n")
                 out.write(f"    Display name : {pname}\n\n")
-
+            skin_id_json_path = SCRIPT_DIR / "highest_skin_ids.json"
+            with open(skin_id_json_path, "w", encoding="utf-8") as f:
+                json.dump(max_skin_ids, f, indent=2, sort_keys=True)
+            logging.info(f"Exported max skin IDs to {skin_id_json_path}")
     except Exception as e:
         raise RuntimeError(f"Failed writing master TXT {txt_path}: {e}") from e
 
     return txt_path
+
 
 def export_filtered_weapons_from_info(
     weapon_info_path: Path,
@@ -762,28 +746,50 @@ def export_filtered_weapons_from_info(
     # Write to JSON
     try:
         with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(filtered, f, ensure_ascii=False, indent=2)
+            json.dump(filtered, f, ensure_ascii=False, indent=2, sort_keys=True)
     except Exception as e:
         raise RuntimeError(f"Failed writing filtered weapons JSON: {e}") from e
 
 
+def export_weapon_skin_map_from_langmap(
+    lang_map: Dict[str, str], output_dir: Path
+) -> None:
+
+    # Match only plain keys like weapon_006_s_1
+    skin_pattern = re.compile(r"^(weapon_\d+)_s_\d+$")
+
+    skin_map = defaultdict(list)
+
+    for full_id in lang_map:
+        if "/" in full_id:
+            continue
+        match = skin_pattern.match(full_id)
+        if match:
+            base = match.group(1)
+            skin_map[base].append(full_id)
+
+    # Sort the result for stable output
+    skin_map = {k: sorted(v) for k, v in skin_map.items()}
+
+    # Export to JSON
+    with open(output_dir, "w", encoding="utf-8") as f:
+        json.dump(skin_map, f, indent=2, sort_keys=True)
+
 
 def main():
-    
+
     try:
         version, link = get_latest_apk_info()
     except Exception as e:
         logging.error(f"Failed to get APK info: {e}")
         sys.exit(1)
 
-    
     try:
         sk_extracted = ensure_apk_extracted(version, link)
     except Exception as e:
         logging.error(f"Failed to download/extract APK: {e}")
         sys.exit(1)
 
-    
     try:
         global ASSET_STUDIO_DIR
         ASSET_STUDIO_DIR = ensure_asset_studio()
@@ -791,14 +797,12 @@ def main():
         logging.error(f"Failed to prepare AssetStudio CLI: {e}")
         sys.exit(1)
 
-    
     try:
         run_asset_extractions(sk_extracted)
     except Exception as e:
         logging.error(f"AssetStudio extraction failed: {e}")
         sys.exit(1)
 
-    
     try:
         i2_dat = find_valid_i2_dat()
         records, languages = parse_i2_asset_file(i2_dat)
@@ -806,14 +810,12 @@ def main():
         logging.error(f"Failed to parse I2 .dat: {e}")
         sys.exit(1)
 
-    
     try:
         csv_path = write_i2_csv(version, records)
     except Exception as e:
         logging.error(f"Failed writing CSV: {e}")
         sys.exit(1)
 
-    
     weapon_json_file = None
     try:
         for f in EXPORT_DIR.iterdir():
@@ -826,7 +828,6 @@ def main():
         logging.error(f"Error locating WeaponInfo.txt: {e}")
         sys.exit(1)
 
-    
     try:
         lang_maps = build_dictionaries(csv_path)
     except Exception as e:
@@ -850,6 +851,13 @@ def main():
         logging.info(f"Filtered weapon JSON written: {filtered_json_path}")
     except Exception as e:
         logging.error(f"Failed exporting filtered weapons JSON: {e}")
+    weapon_skin_path = SCRIPT_DIR / f"weapon_skins_{version}.json"
+    lang_map = load_language_map(csv_path)
+    try:
+        export_weapon_skin_map_from_langmap(lang_map, weapon_skin_path)
+        logging.info(f"Weapon skin baked : {weapon_skin_path}")
+    except Exception as e:
+        logging.error(f"Cannot export weapon skin: {e}")
     try:
         if DATA_DIR.exists():
             shutil.rmtree(DATA_DIR)
