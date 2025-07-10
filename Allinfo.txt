@@ -688,7 +688,7 @@ weapon_076
     Forgeable : True
     Is melee  : True
     Rarity    : 2
-    Type      : Spear
+    Type      : Sword
 
 weapon_077
     Name      : Grand Knight's Sword
@@ -2895,6 +2895,41 @@ weapon_402
     Rarity    : 2
     Type      : Strange
 
+weapon_403
+    Name      : Jingubang
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 5
+    Type      : Sword
+
+weapon_404
+    Name      : Lightning Pentawhips
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 3
+    Type      : Strange
+
+weapon_405
+    Name      : Soul Crusher
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 4
+    Type      : Sword
+
+weapon_406
+    Name      : Plasummonic
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 3
+    Type      : ShortLaser
+
+weapon_407
+    Name      : Wig
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 2
+    Type      : Strange
+
 weapon_900
     Name      : Candied Hawberries
     Forgeable : True
@@ -3085,7 +3120,7 @@ weapon_init_aigirl
     Type      : Strange
 
 weapon_init_aigirlx
-    Name      : [Name Not Found]
+    Name      : Sparking Gemini
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3093,6 +3128,13 @@ weapon_init_aigirlx
 
 weapon_init_aigirlxx
     Name      : Quantum Stinger
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Strange
+
+weapon_init_aigirlxx2
+    Name      : Zephyrage
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3161,6 +3203,13 @@ weapon_init_airbenderxx7
     Rarity    : 1
     Type      : Default
 
+weapon_init_airbenderxx8
+    Name      : Tempest Fang
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Default
+
 weapon_init_alchemist
     Name      : Dormant Bubble Machine
     Forgeable : True
@@ -3177,6 +3226,13 @@ weapon_init_alchemistx
 
 weapon_init_alchemistxx
     Name      : Dormant Bubble Machine
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : ShotGun
+
+weapon_init_alchemistxx10
+    Name      : [Name Not Found]
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3232,7 +3288,7 @@ weapon_init_alchemistxx8
     Type      : ShotGun
 
 weapon_init_alchemistxx9
-    Name      : Strange Solution
+    Name      : Arcana Flask
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3296,6 +3352,13 @@ weapon_init_assassinx
 
 weapon_init_assassinxx
     Name      : Blood Blade
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Sword
+
+weapon_init_assassinxx10
+    Name      : Key of Atlantis
     Forgeable : False
     Is melee  : True
     Rarity    : 1
@@ -3434,6 +3497,27 @@ weapon_init_beheadedx
     Rarity    : 1
     Type      : Sword
 
+weapon_init_captain
+    Name      : Cutlass & Flintlock
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 0
+    Type      : Strange
+
+weapon_init_captainx
+    Name      : Cutlass & Flintlock
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Strange
+
+weapon_init_captainxx
+    Name      : Netherflare Duet
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Strange
+
 weapon_init_costumeprince
     Name      : Plastic Mucus Gun
     Forgeable : True
@@ -3478,6 +3562,13 @@ weapon_init_costumeprincexx4
 
 weapon_init_costumeprincexx5
     Name      : Scepter of Domination
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Gun
+
+weapon_init_costumeprincexx6
+    Name      : Rainbow Brush
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3632,6 +3723,13 @@ weapon_init_elvesx
 
 weapon_init_elvesxx
     Name      : Ancient Bow
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Bow
+
+weapon_init_elvesxx10
+    Name      : Mistglow Bow
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3924,6 +4022,13 @@ weapon_init_magexx10
     Rarity    : 1
     Type      : Staff
 
+weapon_init_magexx11
+    Name      : Starry Glowstick
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Staff
+
 weapon_init_magexx2
     Name      : Embroidered Blade
     Forgeable : False
@@ -4050,6 +4155,13 @@ weapon_init_minerxx8
     Rarity    : 1
     Type      : Axe
 
+weapon_init_minerxx9
+    Name      : ₍•ʚ•₎
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Axe
+
 weapon_init_necromancer
     Name      : Staff of Plague
     Forgeable : True
@@ -4073,6 +4185,13 @@ weapon_init_necromancerxx
 
 weapon_init_necromancerxx10
     Name      : Dear Dialer
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Staff
+
+weapon_init_necromancerxx11
+    Name      : Transcendent Trumpet
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -4890,6 +5009,13 @@ weapon_init_vikingxx10
     Rarity    : 1
     Type      : Strange
 
+weapon_init_vikingxx11
+    Name      : Waverider
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Strange
+
 weapon_init_vikingxx2
     Name      : [Name Not Found]
     Forgeable : False
@@ -5039,6 +5165,13 @@ weapon_init_warlockxx4
 
 weapon_init_warlockxx5
     Name      : Scarlet Moon
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Staff
+
+weapon_init_warlockxx6
+    Name      : Lavender Dew
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -5270,6 +5403,34 @@ weapon_mythic_17
 
 weapon_mythic_18
     Name      : Dragon Slayer
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 6
+    Type      : Mythic
+
+weapon_mythic_19
+    Name      : True Samadhi Fire
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 6
+    Type      : Mythic
+
+weapon_mythic_20
+    Name      : True Palm-leaf Fan
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 6
+    Type      : Mythic
+
+weapon_mythic_21
+    Name      : Immortal-Binding Rope
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 6
+    Type      : Mythic
+
+weapon_mythic_22
+    Name      : Long Blade of Inferno King
     Forgeable : True
     Is melee  : True
     Rarity    : 6
@@ -5593,6 +5754,7 @@ c0 = Knight
     c0_skin28 = Knoght
     c0_skin29 = Pyroverdict Geralt
     c0_skin30 = Skywrath Saint Salvator
+    c0_skin31 = Knipybara
 
 c1 = Rogue
     c1_skin0 = Rogue
@@ -5648,6 +5810,7 @@ c10 = Priestess
     c10_skin20 = Stellar Envoy Elizabeth
     c10_skin21 = Priestoss
     c10_skin22 = Fragrans Felora
+    c10_skin23 = Pripybara
 
 c11 = Druid
     c11_skin0 = Druid
@@ -5673,6 +5836,7 @@ c11 = Druid
     c11_skin20 = Justice Alice
     c11_skin21 = Drood
     c11_skin22 = Butterflette Lofeyra
+    c11_skin23 = Drupybara
 
 c12 = Robot
     c12_skin0 = Robot
@@ -5725,6 +5889,7 @@ c13 = Berserker
     c13_skin23 = Sunchaser Acon
     c13_skin24 = Borserker
     c13_skin25 = Bersybara
+    c13_skin26 = Surfer Sean
 
 c14 = Necromancer
     c14_skin0 = Necromancer
@@ -5747,6 +5912,7 @@ c14 = Necromancer
     c14_skin17 = Mobile Maven Meng
     c14_skin18 = Necromoncer
     c14_skin19 = Necrybara
+    c14_skin20 = Miraculous Sonatia
 
 c15 = Officer
     c15_skin0 = Officer
@@ -5792,6 +5958,7 @@ c16 = Taoist
     c16_skin18 = Straight-A Sichen
     c16_skin19 = Taoost
     c16_skin20 = Dominus Faustus
+    c16_skin21 = Taopybara
 
 c17 = Inter-dimension Traveler
     c17_skin0 = Inter-dimension Traveler
@@ -5830,6 +5997,7 @@ c2 = Witch
     c2_skin24 = Soulweaver Lunelle
     c2_skin25 = Wotch
     c2_skin26 = Witybara
+    c2_skin27 = Idol Isla
 
 c20 = Time Traveling Ninja
     c20_skin0 = Time Traveling Ninja
@@ -5849,6 +6017,7 @@ c22 = Airbender
     c22_skin8 = Xiahou Dun - Yuanrang
     c22_skin9 = Airbonder
     c22_skin10 = Martialist Lee
+    c22_skin11 = Stormcrest Falco
 
 c23 = Demonmancer
     c23_skin0 = Demonmancer
@@ -5863,6 +6032,7 @@ c23 = Demonmancer
     c23_skin9 = Voidlord Eclipsa
     c23_skin10 = Demonmoncer
     c23_skin11 = Demybara
+    c23_skin12 = Gardener Gwen
 
 c24 = Miner
     c24_skin0 = Miner
@@ -5879,6 +6049,7 @@ c24 = Miner
     c24_skin11 = Sugarheart Princess Angelica
     c24_skin12 = Moner
     c24_skin13 = Minybara
+    c24_skin14 = Seabreeze Sylvie
 
 c25 = Trap Master
     c25_skin0 = Trap Master
@@ -5904,6 +6075,7 @@ c26 = Costume Prince
     c26_skin8 = Chamaeleon
     c26_skin9 = Costome Prince
     c26_skin10 = Noah the King
+    c26_skin11 = Painter Preston
 
 c27 = Physicist
     c27_skin0 = Physicist
@@ -5925,6 +6097,7 @@ c28 = Sword Master
     c28_skin5 = Jade Blade
     c28_skin6 = Sword Moster
     c28_skin7 = Rosadame Evelyn
+    c28_skin8 = Swordy Mara
 
 c29 = Lancer
     c29_skin0 = Lancer
@@ -5935,6 +6108,7 @@ c29 = Lancer
     c29_skin5 = Fallen Star
     c29_skin6 = Ming Xiao
     c29_skin7 = Loncer
+    c29_skin8 = Gigachad
 
 c3 = Assassin
     c3_skin0 = Assassin
@@ -5962,6 +6136,8 @@ c3 = Assassin
     c3_skin22 = 刺
     c3_skin23 = Abyssal Submariner Skin
     c3_skin24 = Assossin
+    c3_skin25 = Assassybara
+    c3_skin26 = Poseidon, King of the Sea
 
 c30 = Warliege
     c30_skin0 = Warliege
@@ -5990,6 +6166,7 @@ c32 = Astromancer
     c32_skin3 = Aurora Cavalier
     c32_skin4 = Astromoncer
     c32_skin5 = UFO-Chaser Urian
+    c32_skin6 = Astropybara
 
 c33 = Fighter
     c33_skin0 = Fighter
@@ -6006,6 +6183,7 @@ c34 = Trickster
     c34_skin2 = 戏
     c34_skin3 = Trockster
     c34_skin4 = Maid Mayu
+    c34_skin5 = Crown of Clone
 
 c35 = Bard
     c35_skin0 = Bard
@@ -6013,6 +6191,7 @@ c35 = Bard
     c35_skin2 = 诗
     c35_skin3 = Bord
     c35_skin4 = Cheerleader Clara
+    c35_skin5 = Bardybara
 
 c36 = Gunner
     c36_skin0 = Gunner
@@ -6024,6 +6203,13 @@ c36 = Gunner
 c37 = Machina
     c37_skin0 = Machina
     c37_skin1 = Hexagon
+    c37_skin2 = Lostpearl Lazura
+    c37_skin3 = Mochino
+
+c38 = Captain
+    c38_skin0 = Captain
+    c38_skin1 = Dreadwake Stryke
+    c38_skin2 = Coptain
 
 c4 = Alchemist
     c4_skin0 = Alchemist
@@ -6047,6 +6233,8 @@ c4 = Alchemist
     c4_skin18 = Vicious Witch
     c4_skin19 = Experimenter Ellie
     c4_skin20 = Alchomost
+    c4_skin21 = Alchybara
+    c4_skin22 = Elementaress Lizzmii
 
 c5 = Engineer
     c5_skin0 = Engineer
@@ -6073,6 +6261,9 @@ c5 = Engineer
     c5_skin21 = Ultra Blue
     c5_skin22 = Eggineer
     c5_skin23 = Inventor Hunter
+    c5_skin24 = Engybara
+    c5_skin25 = Team Tarara
+    c5_skin26 = Programmer
 
 c6 = Vampire
     c6_skin0 = Vampire
@@ -6124,6 +6315,7 @@ c7 = Paladin
     c7_skin22 = Sisyphos
     c7_skin23 = Paladon
     c7_skin24 = Hellaxe Gregor
+    c7_skin25 = Palybara
 
 c8 = Elf
     c8_skin0 = Elf
@@ -6147,6 +6339,7 @@ c8 = Elf
     c8_skin18 = Bu Lianshi
     c8_skin19 = Athlete Ayuki
     c8_skin20 = Olf
+    c8_skin21 = Apsara Veluriya
 
 c9 = Werewolf
     c9_skin0 = Werewolf
@@ -6176,6 +6369,7 @@ c9 = Werewolf
     c9_skin24 = Grimreaper Grayson
     c9_skin25 = Woowolf
     c9_skin26 = Werepybara
+    c9_skin27 = Spooky Bear
 
 ██████  ███████ ████████
 ██   ██ ██         ██   
@@ -6311,6 +6505,9 @@ c9 = Werewolf
 
 48
     Display name : Mahhmot
+
+49
+    Display name : Kapikapi
 
 5
     Display name : Panda
@@ -6472,6 +6669,14 @@ c9 = Werewolf
 1021_name
     Name        : [Name Not Found]
     Description : Power Protocol
+
+1022
+    Name        : [Name Not Found]
+    Description : Immune to explosive barrels and randomly drops them on the field. [Exclusive to this character]
+
+1022_name
+    Name        : [Name Not Found]
+    Description : Blast Fest
 
 11
     Name        : Healing Surge
@@ -6741,6 +6946,18 @@ c9 = Werewolf
     Name        : [Name Not Found]
     Description : Martial Spirit
 
+2147
+    Name        : [Name Not Found]
+    Description : Plants on the Rosemary Island gain +{0}% health and yield {1}% more Rosemary Beans.
+
+2148
+    Name        : [Name Not Found]
+    Description : Whenever a plant is destroyed, it deals {0} damage to nearby enemies.
+
+2150
+    Name        : [Name Not Found]
+    Description : Explosions cover a larger area but deal {0}% less damage.
+
 2170
     Name        : [Name Not Found]
     Description : Release <color=#FFEB04FF>Holy Nova</color> and gain immunity to this hit when taking lethal damage. Cooldown {0} seconds. \n<color=#FFEB04FF>Holy Nova</color>: Destroys non-boss enemies and their bullets, and dishes out a massive amount of damage to bosses, while healing all allies. Effective range {1}.
@@ -6772,6 +6989,30 @@ c9 = Werewolf
 2178
     Name        : [Name Not Found]
     Description : Casting a skill drops firecrackers that explode upon contact with enemies or after a period time.
+
+2179
+    Name        : [Name Not Found]
+    Description : When near pets, followers, or summons, releases lightning bolts upon nearby enemies over time.
+
+2180
+    Name        : [Name Not Found]
+    Description : Attacks in battle might deal +{0} damage and restore {1}% of consumed energy.
+
+2181
+    Name        : [Name Not Found]
+    Description : Marks enemies you hit. Hitting a marked enemy with your weapon deals {0}% damage to nearby enemies.
+
+2182
+    Name        : [Name Not Found]
+    Description : All damage you deal during the first {0}s in each battle is absorbed. After that, all your attacks deal additional damage equal to {1}% of the absorbed damage until the end of the battle.
+
+2183
+    Name        : [Name Not Found]
+    Description : Your main weapon copies your secondary weapon's attack style for {0}s. Cooldown: {1}s.
+
+2184
+    Name        : [Name Not Found]
+    Description : Summons a pack of monkeys.
 
 22
     Name        : Ice Shield
@@ -6872,6 +7113,50 @@ c9 = Werewolf
 46
     Name        : [Name Not Found]
     Description : Deal {0}% more damage to frozen enemies.
+
+47
+    Name        : [Name Not Found]
+    Description : Restores {0} armor upon defeating an enemy. Cooldown: {1}s.
+
+48
+    Name        : [Name Not Found]
+    Description : After releasing a fully charged weapon attack, summons a mirror image that lasts {0}s.
+
+49
+    Name        : [Name Not Found]
+    Description : Dealing elemental damage has a {0}% chance to summon a matching elemental minion for {1}s. Repeated triggers extend the minion's duration.
+
+50
+    Name        : [Name Not Found]
+    Description : Skill cooldown is extended by {0}s. Defeating an enemy accelerates cooldown by {1}%.
+
+51
+    Name        : [Name Not Found]
+    Description : Armor restores {0}% slower in battle. For every {1} armor you own, weapon hits deal +1 damage.
+
+52
+    Name        : [Name Not Found]
+    Description : Switching weapons increases weapon damage by {0}% for {1}s, stacking up to {2} times.
+
+53
+    Name        : [Name Not Found]
+    Description : Attacks increase movement speed by {1}% for {0}s, stacking up to {2} times.
+
+54
+    Name        : [Name Not Found]
+    Description : Machine gun and sniper bullets pierce only 1 enemy at a time. After piercing enemies, these bullets automatically track and strike enemies, dealing {0}% damage.
+
+55
+    Name        : [Name Not Found]
+    Description : Attacks toss random elemental vials at enemies. For every {1} energy consumed in the last {0}s, tosses an extra bottle. Cooldown: {2}s.
+
+56
+    Name        : [Name Not Found]
+    Description : Energy orbs restore {0}% less energy. You might generate energy orbs while moving in battle.
+
+57
+    Name        : [Name Not Found]
+    Description : Picking up an energy orb grants {0} special bullets. Upon consuming 1 energy, fires 1 special bullet.
 
  ██████ ██   ██  █████  ██       █████  ███    ██  ██████  ███████ 
 ██      ██   ██ ██   ██ ██      ██   ██ ████   ██ ██       ██      
@@ -7203,6 +7488,11 @@ ReturnPlayer
     Name        : [Name Not Found]
     Title       : Knight's Return
     Description : Welcome back! This condition grants you a dream start and 2 extra revivals for a limited time (only applicable in Level Mode).
+
+ReturnPlayerH5
+    Name        : [Name Not Found]
+    Title       : Teamwork Dreamwork
+    Description : Max HP +1; Max energy +20.
 
 SaleDay
     Name        : Sales Day
@@ -7705,6 +7995,9 @@ plant_banboo
 plant_binary_tree
     Display name : Binary Tree
 
+plant_blackrose
+    Display name : Black Rose
+
 plant_cactus
     Display name : Cactus
 
@@ -7732,6 +8025,9 @@ plant_fantastic_flower
 plant_firecracker
     Display name : Firecracker
 
+plant_flatpeach
+    Display name : Heavenly Peach
+
 plant_gear_flower
     Display name : Gear Flower
 
@@ -7740,6 +8036,9 @@ plant_gem_flower
 
 plant_gem_tree
     Display name : Gem Tree
+
+plant_ginseng
+    Display name : Ginseng
 
 plant_heptacolor
     Display name : Heptacolor Viola
@@ -7752,6 +8051,9 @@ plant_iron_tree
 
 plant_lavender
     Display name : Lavender
+
+plant_lithiumflower
+    Display name : Lithium Flower
 
 plant_lotus
     Display name : Snow Lotus
@@ -7771,11 +8073,17 @@ plant_mandrake
 plant_mirror_plane_flower
     Display name : Mirror Flower
 
+plant_monotropa
+    Display name : Ghost Pipe
+
 plant_mushroom
     Display name : Crystal Mushroom
 
 plant_mushroom_gold
     Display name : Golden Mushroom
+
+plant_nepenthes
+    Display name : Monkey Cup
 
 plant_pumpkin
     Display name : Pumpkin
