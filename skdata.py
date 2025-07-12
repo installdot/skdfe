@@ -775,6 +775,57 @@ def export_weapon_skin_map_from_langmap(
     with open(output_dir, "w", encoding="utf-8") as f:
         json.dump(skin_map, f, indent=2, sort_keys=True)
 
+def export_needed_data_from_langmap(lang_map: Dict[str, str], output_dir: Path) -> None:
+
+    result = {
+        "skin": defaultdict(dict),         # c1: {c1_skin0: name, ...}
+        "pet": {},                         # p0: name
+        "material": {},                    # material_id: name
+        "character_skill": {}              # Character1_skill_1_name: name
+    }
+
+    # Patterns
+    skin_pattern = re.compile(r"Character(\d+)_name_skin(\d+)")
+    pet_pattern = re.compile(r"Pet_name_(\d+)")
+    material_pattern = re.compile(r'(^material_(?!.*(?:activity|book|fragment|tape|skill|season|new|money|multi)).*)')
+    skill_pattern = re.compile(r"(Character\d+_skill_\d+_name)")
+    for key, value in lang_map.items():
+        # Skins
+        m_skin = skin_pattern.fullmatch(key)
+        if m_skin:
+            char_index, skin_index = m_skin.groups()
+            result["skin"][f"c{char_index}"][f"c{char_index}_skin{skin_index}"] = value
+            continue
+
+        # Pets
+        m_pet = pet_pattern.fullmatch(key)
+        if m_pet:
+            pid = m_pet.group(1)
+            result["pet"][pid] = value
+            continue
+
+        # Materials
+        m_mat = material_pattern.fullmatch(key)
+        if m_mat:
+            mid = m_mat.group(1)
+            result["material"][mid] = value
+            continue
+
+        # Character Skills
+        m_skill = skill_pattern.fullmatch(key)
+        if m_skill:
+            sid = m_skill.group(1)
+            result["character_skill"][sid] = value
+            continue
+
+    # Convert defaultdict to dict for JSON
+    result["skin"] = dict(result["skin"])
+
+    # Write to JSON
+    with open(output_dir, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False, sort_keys=True)
+
+    logging.info(f"Exported: {output_dir}")
 
 def main():
 
@@ -858,6 +909,10 @@ def main():
         logging.info(f"Weapon skin baked : {weapon_skin_path}")
     except Exception as e:
         logging.error(f"Cannot export weapon skin: {e}")
+    try:
+        export_needed_data_from_langmap(lang_map, SCRIPT_DIR / f"needed_data_{version}.json")
+    except Exception as e:
+        logging.warning(f"Can't export: {e}")
     try:
         if DATA_DIR.exists():
             shutil.rmtree(DATA_DIR)
