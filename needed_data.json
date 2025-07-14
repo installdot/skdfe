@@ -99,7 +99,6 @@
     "material_fertilize": "Fertilizer",
     "material_fish": "Fish Chip",
     "material_gear": "Parts",
-    "material_gem": "Gem",
     "material_grain": "Pet Treats",
     "material_iron": "Ironstone",
     "material_magic_black": "Magic Stone Fragment Obsidian",
@@ -109,6 +108,7 @@
     "material_magic_orange": "Magic Stone Fragment Orange",
     "material_magic_purple": "Magic Fragment Purple",
     "material_magic_red": "Magic Fragment Red",
+    "material_season_coin": "Season Coin",
     "material_ticket": "Free Trial Voucher",
     "material_ticket_bossrush": "Feather of Valkyrie",
     "material_wood": "Timber"
