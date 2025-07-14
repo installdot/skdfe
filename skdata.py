@@ -787,7 +787,7 @@ def export_needed_data_from_langmap(lang_map: Dict[str, str], output_dir: Path) 
     # Patterns
     skin_pattern = re.compile(r"Character(\d+)_name_skin(\d+)")
     pet_pattern = re.compile(r"Pet_name_(\d+)")
-    material_pattern = re.compile(r'(^material_(?!.*(?:activity|book|fragment|tape|skill|gem|new|money|multi|box)).*)')
+    material_pattern = re.compile(r'(^material_(?!.*(?:activity|book|fragment|tape|skill|new|money|multi|box)).*)')
     skill_pattern = re.compile(r"(Character\d+_skill_\d+_name)")
     for key, value in lang_map.items():
         # Skins
