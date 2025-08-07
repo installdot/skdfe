@@ -68,6 +68,7 @@
     "Character34_skill_0_name": "Shadow Crescendo",
     "Character35_skill_0_name": "Melodic Pulse",
     "Character36_skill_0_name": "Marksman's Mastery",
+    "Character36_skill_1_name": "Deadeye Domain",
     "Character37_skill_0_name": "Iridescent Resonance",
     "Character38_skill_0_name": "Barrel Blowout",
     "Character3_skill_0_name": "Dark Blade",
@@ -222,6 +223,7 @@
       "c1_skin25": "Oiia Meow",
       "c1_skin26": "Roogue",
       "c1_skin27": "Alein the Knight",
+      "c1_skin28": "Rogybara",
       "c1_skin3": "Rudolph",
       "c1_skin4": "Bubbles",
       "c1_skin5": "Nightingale",
@@ -248,6 +250,7 @@
       "c10_skin21": "Priestoss",
       "c10_skin22": "Fragrans Felora",
       "c10_skin23": "Pripybara",
+      "c10_skin24": "Clinic Cloudia",
       "c10_skin3": "Bunny",
       "c10_skin4": "Sound of Paradise",
       "c10_skin5": "Anubis",
@@ -274,6 +277,7 @@
       "c11_skin21": "Drood",
       "c11_skin22": "Butterflette Lofeyra",
       "c11_skin23": "Drupybara",
+      "c11_skin24": "Blightherald Gorth",
       "c11_skin3": "Reindeer",
       "c11_skin4": "Dragon King",
       "c11_skin5": "Frostash",
@@ -298,6 +302,7 @@
       "c12_skin2": "Simple Calculation Specialist Robot",
       "c12_skin20": "Roboto",
       "c12_skin21": "Superstudent Soultama",
+      "c12_skin22": "Robybara",
       "c12_skin3": "Doom Corp.",
       "c12_skin4": "Zulan The Colossus Skin",
       "c12_skin5": "Police 9102",
@@ -444,7 +449,9 @@
       "c2_skin9": "Nine-Tail Fox"
     },
     "c20": {
-      "c20_skin0": "Time Traveling Ninja"
+      "c20_skin0": "Time Traveling Ninja",
+      "c20_skin1": "Skyveil Sylph",
+      "c20_skin2": "Tome Troveling Ninjo"
     },
     "c21": {
       "c21_skin0": "Special Forces"
@@ -498,6 +505,7 @@
     "c25": {
       "c25_skin0": "Trap Master",
       "c25_skin1": "Yama Raja",
+      "c25_skin10": "Trapy Mara",
       "c25_skin2": "\"TRAP MASTAH\"",
       "c25_skin3": "Aries",
       "c25_skin4": "Holy",
@@ -530,7 +538,8 @@
       "c27_skin5": "Lady Zhen",
       "c27_skin6": "Hana",
       "c27_skin7": "Physocist",
-      "c27_skin8": "Nyxcrown Camilla"
+      "c27_skin8": "Nyxcrown Camilla",
+      "c27_skin9": "Physybara"
     },
     "c28": {
       "c28_skin0": "Sword Master",
@@ -541,7 +550,8 @@
       "c28_skin5": "Jade Blade",
       "c28_skin6": "Sword Moster",
       "c28_skin7": "Rosadame Evelyn",
-      "c28_skin8": "Swordy Mara"
+      "c28_skin8": "Swordy Mara",
+      "c28_skin9": "Hellbelle Lorna"
     },
     "c29": {
       "c29_skin0": "Lancer",
@@ -592,7 +602,8 @@
       "c30_skin5": "General Yin",
       "c30_skin6": "Armsmaster Augustus",
       "c30_skin7": "Worliege",
-      "c30_skin8": "Rockstar Zock"
+      "c30_skin8": "Rockstar Zock",
+      "c30_skin9": "Warlybara"
     },
     "c31": {
       "c31_skin0": "Arcane Knight",
@@ -610,7 +621,8 @@
       "c32_skin3": "Aurora Cavalier",
       "c32_skin4": "Astromoncer",
       "c32_skin5": "UFO-Chaser Urian",
-      "c32_skin6": "Astropybara"
+      "c32_skin6": "Astropybara",
+      "c32_skin7": "Tentacled Samuel"
     },
     "c33": {
       "c33_skin0": "Fighter",
@@ -619,7 +631,9 @@
       "c33_skin3": "Jade-Faced Princess",
       "c33_skin4": "Snowflake Sugarena",
       "c33_skin5": "Foghter",
-      "c33_skin6": "Journalist Junie"
+      "c33_skin6": "Journalist Junie",
+      "c33_skin7": "Fightybara",
+      "c33_skin8": "Pyropact Ignis"
     },
     "c34": {
       "c34_skin0": "Trickster",
@@ -642,7 +656,8 @@
       "c36_skin1": "Renegade Lucian",
       "c36_skin2": "手",
       "c36_skin3": "Gonner",
-      "c36_skin4": "Gunnybara"
+      "c36_skin4": "Gunnybara",
+      "c36_skin5": "Theophil​​ the Bishop"
     },
     "c37": {
       "c37_skin0": "Machina",
@@ -725,6 +740,7 @@
       "c6_skin2": "Vampire Police",
       "c6_skin20": "Vompire",
       "c6_skin21": "Shadowthane Vane",
+      "c6_skin22": "Vampybara",
       "c6_skin3": "Old Breed",
       "c6_skin4": "Jack the Pumpkin",
       "c6_skin5": "Bai Wu Chang",
@@ -753,6 +769,7 @@
       "c7_skin23": "Paladon",
       "c7_skin24": "Hellaxe Gregor",
       "c7_skin25": "Palybara",
+      "c7_skin26": "Flametide Sigrid",
       "c7_skin3": "Santa Green",
       "c7_skin4": "Virudhaka",
       "c7_skin5": "Guardian",
@@ -807,6 +824,7 @@
       "c9_skin25": "Woowolf",
       "c9_skin26": "Werepybara",
       "c9_skin27": "Spooky Bear",
+      "c9_skin28": "Greedfang Warwolf Skin",
       "c9_skin3": "Monkey King",
       "c9_skin4": "Living Dead",
       "c9_skin5": "Tiger Cub",

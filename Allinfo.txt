@@ -48,7 +48,7 @@ transform_weapon_envoy
 
 transform_weapon_ninja
     Name      : Time Traveler's Gadget
-    Forgeable : True
+    Forgeable : False
     Is melee  : False
     Rarity    : 6
     Type      : Mythic
@@ -891,21 +891,21 @@ weapon_105
     Forgeable : True
     Is melee  : False
     Rarity    : 1
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_106
     Name      : Crossbow
     Forgeable : True
     Is melee  : False
     Rarity    : 0
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_107
     Name      : Crossbow Plus
     Forgeable : True
     Is melee  : False
     Rarity    : 2
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_108
     Name      : Illusion
@@ -1038,7 +1038,7 @@ weapon_126
     Forgeable : True
     Is melee  : False
     Rarity    : 1
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_127
     Name      : Crystal Crab's Katana
@@ -1626,7 +1626,7 @@ weapon_209
     Forgeable : True
     Is melee  : False
     Rarity    : 1
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_210
     Name      : Tidal Staff
@@ -1703,7 +1703,7 @@ weapon_220
     Forgeable : True
     Is melee  : False
     Rarity    : 4
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_221
     Name      : Explosive Warhammer
@@ -2305,7 +2305,7 @@ weapon_316
     Forgeable : True
     Is melee  : False
     Rarity    : 3
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_317
     Name      : Whisper of Dark
@@ -2382,7 +2382,7 @@ weapon_327
     Forgeable : True
     Is melee  : False
     Rarity    : 1
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_328
     Name      : Alien Plasma Eagle
@@ -2683,7 +2683,7 @@ weapon_370
     Forgeable : True
     Is melee  : False
     Rarity    : 4
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_371
     Name      : Buccaneer Captain's Naval Cannon
@@ -2704,7 +2704,7 @@ weapon_373
     Forgeable : True
     Is melee  : False
     Rarity    : 3
-    Type      : Bow
+    Type      : Crossbow
 
 weapon_374
     Name      : Face-Sized Momiji
@@ -2929,6 +2929,13 @@ weapon_407
     Is melee  : False
     Rarity    : 2
     Type      : Strange
+
+weapon_408
+    Name      : Bug Blaster
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 2
+    Type      : Pistol
 
 weapon_900
     Name      : Candied Hawberries
@@ -3455,6 +3462,13 @@ weapon_init_astrologistxx3
     Rarity    : 1
     Type      : Staff
 
+weapon_init_astrologistxx4
+    Name      : Wink of the Deep
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Staff
+
 weapon_init_bard
     Name      : Forest Melody
     Forgeable : True
@@ -3646,6 +3660,13 @@ weapon_init_druidxx
 
 weapon_init_druidxx10
     Name      : Dawn Dewdrop
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Throw
+
+weapon_init_druidxx11
+    Name      : Ashenbeak
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -3926,6 +3947,13 @@ weapon_init_fighterxx3
 
 weapon_init_fighterxx4
     Name      : Jolly Mics
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Strange
+
+weapon_init_fighterxx5
+    Name      : Blazing Banquet
     Forgeable : False
     Is melee  : True
     Rarity    : 1
@@ -4267,6 +4295,13 @@ weapon_init_ninjax
     Rarity    : 1
     Type      : Sword
 
+weapon_init_ninjaxx
+    Name      : [Name Not Found]
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Sword
+
 weapon_init_officer
     Name      : Nemesis of Villains
     Forgeable : True
@@ -4365,6 +4400,13 @@ weapon_init_paladinxx10
     Rarity    : 1
     Type      : Axe
 
+weapon_init_paladinxx11
+    Name      : Stormrender
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Axe
+
 weapon_init_paladinxx2
     Name      : Green Dragon Crescent Blade
     Forgeable : False
@@ -4444,6 +4486,13 @@ weapon_init_priestxx
 
 weapon_init_priestxx10
     Name      : Osmanthus Bloom
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Staff
+
+weapon_init_priestxx11
+    Name      : Soothing Syringe
     Forgeable : False
     Is melee  : False
     Rarity    : 1
@@ -4701,6 +4750,13 @@ weapon_init_shooterxx
     Rarity    : 1
     Type      : Rifle
 
+weapon_init_shooterxx2
+    Name      : Doctrinal Edict
+    Forgeable : False
+    Is melee  : False
+    Rarity    : 1
+    Type      : Rifle
+
 weapon_init_specialforces
     Name      : S.O. Firearm
     Forgeable : True
@@ -4752,6 +4808,13 @@ weapon_init_swordmasterxx3
 
 weapon_init_swordmasterxx4
     Name      : Thorned Rose
+    Forgeable : False
+    Is melee  : True
+    Rarity    : 1
+    Type      : Sword
+
+weapon_init_swordmasterxx5
+    Name      : Soul Rapier
     Forgeable : False
     Is melee  : True
     Rarity    : 1
@@ -5436,6 +5499,27 @@ weapon_mythic_22
     Rarity    : 6
     Type      : Mythic
 
+weapon_mythic_23
+    Name      : Lightning Claymore
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 6
+    Type      : Mythic
+
+weapon_mythic_24
+    Name      : True Fiery Spear
+    Forgeable : True
+    Is melee  : True
+    Rarity    : 6
+    Type      : Mythic
+
+weapon_mythic_25
+    Name      : Vajra Hoop
+    Forgeable : True
+    Is melee  : False
+    Rarity    : 6
+    Type      : Mythic
+
 weapon_officer_combo
     Name      : [Name Not Found]
     Forgeable : False
@@ -5785,6 +5869,7 @@ c1 = Rogue
     c1_skin25 = Oiia Meow
     c1_skin26 = Roogue
     c1_skin27 = Alein the Knight
+    c1_skin28 = Rogybara
 
 c10 = Priestess
     c10_skin0 = Priestess
@@ -5811,6 +5896,7 @@ c10 = Priestess
     c10_skin21 = Priestoss
     c10_skin22 = Fragrans Felora
     c10_skin23 = Pripybara
+    c10_skin24 = Clinic Cloudia
 
 c11 = Druid
     c11_skin0 = Druid
@@ -5837,6 +5923,7 @@ c11 = Druid
     c11_skin21 = Drood
     c11_skin22 = Butterflette Lofeyra
     c11_skin23 = Drupybara
+    c11_skin24 = Blightherald Gorth
 
 c12 = Robot
     c12_skin0 = Robot
@@ -5861,6 +5948,7 @@ c12 = Robot
     c12_skin19 = Pang Tong - Shiyuan
     c12_skin20 = Roboto
     c12_skin21 = Superstudent Soultama
+    c12_skin22 = Robybara
 
 c13 = Berserker
     c13_skin0 = Berserker
@@ -6001,6 +6089,8 @@ c2 = Witch
 
 c20 = Time Traveling Ninja
     c20_skin0 = Time Traveling Ninja
+    c20_skin1 = Skyveil Sylph
+    c20_skin2 = Tome Troveling Ninjo
 
 c21 = Special Forces
     c21_skin0 = Special Forces
@@ -6062,6 +6152,7 @@ c25 = Trap Master
     c25_skin7 = Sun Quan - Zhongmou
     c25_skin8 = Trop Moster
     c25_skin9 = Jack of All Tricks
+    c25_skin10 = Trapy Mara
 
 c26 = Costume Prince
     c26_skin0 = Costume Prince
@@ -6087,6 +6178,7 @@ c27 = Physicist
     c27_skin6 = Hana
     c27_skin7 = Physocist
     c27_skin8 = Nyxcrown Camilla
+    c27_skin9 = Physybara
 
 c28 = Sword Master
     c28_skin0 = Sword Master
@@ -6098,6 +6190,7 @@ c28 = Sword Master
     c28_skin6 = Sword Moster
     c28_skin7 = Rosadame Evelyn
     c28_skin8 = Swordy Mara
+    c28_skin9 = Hellbelle Lorna
 
 c29 = Lancer
     c29_skin0 = Lancer
@@ -6149,6 +6242,7 @@ c30 = Warliege
     c30_skin6 = Armsmaster Augustus
     c30_skin7 = Worliege
     c30_skin8 = Rockstar Zock
+    c30_skin9 = Warlybara
 
 c31 = Arcane Knight
     c31_skin0 = Arcane Knight
@@ -6167,6 +6261,7 @@ c32 = Astromancer
     c32_skin4 = Astromoncer
     c32_skin5 = UFO-Chaser Urian
     c32_skin6 = Astropybara
+    c32_skin7 = Tentacled Samuel
 
 c33 = Fighter
     c33_skin0 = Fighter
@@ -6176,6 +6271,8 @@ c33 = Fighter
     c33_skin4 = Snowflake Sugarena
     c33_skin5 = Foghter
     c33_skin6 = Journalist Junie
+    c33_skin7 = Fightybara
+    c33_skin8 = Pyropact Ignis
 
 c34 = Trickster
     c34_skin0 = Trickster
@@ -6199,6 +6296,7 @@ c36 = Gunner
     c36_skin2 = 手
     c36_skin3 = Gonner
     c36_skin4 = Gunnybara
+    c36_skin5 = Theophil​​ the Bishop
 
 c37 = Machina
     c37_skin0 = Machina
@@ -6288,6 +6386,7 @@ c6 = Vampire
     c6_skin19 = President Peach
     c6_skin20 = Vompire
     c6_skin21 = Shadowthane Vane
+    c6_skin22 = Vampybara
 
 c7 = Paladin
     c7_skin0 = Paladin
@@ -6316,6 +6415,7 @@ c7 = Paladin
     c7_skin23 = Paladon
     c7_skin24 = Hellaxe Gregor
     c7_skin25 = Palybara
+    c7_skin26 = Flametide Sigrid
 
 c8 = Elf
     c8_skin0 = Elf
@@ -6370,6 +6470,7 @@ c9 = Werewolf
     c9_skin25 = Woowolf
     c9_skin26 = Werepybara
     c9_skin27 = Spooky Bear
+    c9_skin28 = Greedfang Warwolf Skin
 
 ██████  ███████ ████████
 ██   ██ ██         ██   
@@ -7487,7 +7588,7 @@ RenduErmai
 ReturnPlayer
     Name        : [Name Not Found]
     Title       : Knight's Return
-    Description : Welcome back! This condition grants you a dream start and 2 extra revivals for a limited time (only applicable in Level Mode).
+    Description : 2 free revivals and +100 max energy in the returning level.
 
 ReturnPlayerH5
     Name        : [Name Not Found]
