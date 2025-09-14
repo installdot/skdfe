@@ -63,7 +63,7 @@ def download_file(url: str, dest: Path, chunk_size: int = 8192) -> None:
     print(f"Downloading: {url}")
 
     try:
-        with requests.get(url, stream=True, timeout=30) as resp:
+        with requests.get(url, verify=False, stream=True, timeout=30) as resp:
             resp.raise_for_status()
             # total = int(resp.headers.get("content-length", 0))
             # downloaded = 0
@@ -438,7 +438,7 @@ def write_i2_csv(version: str, records: List[Tuple[str, List[str]]]) -> Path:
     return csv_path
 
 
-def load_language_map(csv_path: Path) -> Dict[str, str]:
+def load_language_map(csv_path: Path, language: str = "English") -> Dict[str, str]:
     """
     Load the CSV and resolve aliases like `{boss18}` → boss18 → final English string.
     Returns: dict of ID → English string (fully resolved)
@@ -450,7 +450,7 @@ def load_language_map(csv_path: Path) -> Dict[str, str]:
         reader = csv.DictReader(f)
         for row in reader:
             rid = row["id"].strip()
-            eng = row.get("English", "").strip()
+            eng = row.get(language, "").strip()
             raw_map[rid] = eng
 
     def resolve(key: str, visited=None) -> str:
@@ -751,29 +751,49 @@ def export_filtered_weapons_from_info(
         raise RuntimeError(f"Failed writing filtered weapons JSON: {e}") from e
 
 
-def export_weapon_skin_map_from_langmap(
-    lang_map: Dict[str, str], output_dir: Path
-) -> None:
+def export_weapon_evo_data(lang_map: Dict[str, str], output_path: Path) -> None:
+    import re
+    from collections import defaultdict
 
-    # Match only plain keys like weapon_006_s_1
-    skin_pattern = re.compile(r"^(weapon_\d+)_s_\d+$")
+    skin_pattern = re.compile(r"^(weapon_\w+)_s_\d+$")
+    upgrade_pattern = re.compile(r"^desc_evolution_(weapon_\w+)$")
 
-    skin_map = defaultdict(list)
+    weapon_skin_map = defaultdict(list)
+    upgradable_weapons = set()
 
-    for full_id in lang_map:
-        if "/" in full_id:
+    for key in lang_map:
+        if "/" in key:
+            continue  # Skip keys like weapon/weapon_000
+
+        # Match weapon skins
+        m_skin = skin_pattern.match(key)
+        if m_skin:
+            base_weapon = m_skin.group(1)
+            weapon_skin_map[base_weapon].append(key)
             continue
-        match = skin_pattern.match(full_id)
-        if match:
-            base = match.group(1)
-            skin_map[base].append(full_id)
 
-    # Sort the result for stable output
-    skin_map = {k: sorted(v) for k, v in skin_map.items()}
+        # Match upgradable weapons
+        m_upgrade = upgrade_pattern.match(key)
+        if m_upgrade:
+            weapon_id = m_upgrade.group(1)
+            upgradable_weapons.add(weapon_id)
+            continue
 
-    # Export to JSON
-    with open(output_dir, "w", encoding="utf-8") as f:
-        json.dump(skin_map, f, indent=2, sort_keys=True)
+    # Sort outputs
+    weapon_skin_map = {k: sorted(v) for k, v in weapon_skin_map.items()}
+    upgradable_weapon_list = sorted(upgradable_weapons)
+
+    # Final structure
+    result = {
+        "upgradable_weapon": upgradable_weapon_list,
+        "weapon_skin": weapon_skin_map
+    }
+
+    # Write JSON
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False, sort_keys=True)
+
+    print(f"Exported weapon metadata to: {output_path}")
 
 def export_needed_data_from_langmap(lang_map: Dict[str, str], output_dir: Path) -> None:
 
@@ -904,13 +924,16 @@ def main():
         logging.error(f"Failed exporting filtered weapons JSON: {e}")
     weapon_skin_path = SCRIPT_DIR / f"weapon_skins_{version}.json"
     lang_map = load_language_map(csv_path)
+    lang_map_cn = load_language_map(csv_path,"Chinese (Simplified)")
     try:
-        export_weapon_skin_map_from_langmap(lang_map, weapon_skin_path)
-        logging.info(f"Weapon skin baked : {weapon_skin_path}")
+        export_weapon_evo_data(lang_map, weapon_skin_path)
+        logging.info(f"Weapon evolution data baked : {weapon_skin_path}")
     except Exception as e:
         logging.error(f"Cannot export weapon skin: {e}")
     try:
         export_needed_data_from_langmap(lang_map, SCRIPT_DIR / f"needed_data_{version}.json")
+        export_needed_data_from_langmap(lang_map_cn, SCRIPT_DIR / f"needed_data_cn_{version}.json")
+        logging.info("Exported needed data for English and Chinese")
     except Exception as e:
         logging.warning(f"Can't export: {e}")
     try:
